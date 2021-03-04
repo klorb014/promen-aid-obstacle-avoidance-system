@@ -1,0 +1,8 @@
+prefix=/home/lorbetskie/Desktop/promen-aid-obstacle-avoidance-system/install
+
+Name: gazebo_simulation
+Description: Description of gazebo_simulation
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

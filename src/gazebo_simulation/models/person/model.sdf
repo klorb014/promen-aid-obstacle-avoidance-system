@@ -1,0 +1,129 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name="person">
+  <static>true</static>
+	<link name='Lleg'>
+            <pose>0 0 0 0 0 0</pose>
+
+            <collision name='collision'>
+              <geometry>
+                <box>
+                  <size>.1 .1 .8</size>
+                </box>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <box>
+                  <size>.1 .1 .8</size>
+                </box>
+              </geometry>
+            </visual>
+          </link>
+	<link name='Rleg'>
+            <pose>0.3 0 0 0 0 0</pose>
+
+            <collision name='collision'>
+              <geometry>
+                <box>
+                  <size>.1 .1 .8</size>
+                </box>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <box>
+                  <size>.1 .1 .8</size>
+                </box>
+              </geometry>
+            </visual>
+          </link>
+
+	<link name='Torso'>
+            <pose>0.15 0 0.6 0 0 0</pose>
+
+            <collision name='collision'>
+              <geometry>
+                <box>
+                  <size>.5 .2 .5</size>
+                </box>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <box>
+                  <size>.5 .2 .5</size>
+                </box>
+              </geometry>
+            </visual>
+          </link>
+	<link name='Larm'>
+            <pose>0.5 -0.1 .7 -0.785 0 0</pose>
+
+            <collision name='collision'>
+              <geometry>
+                <box>
+                  <size>.1 .1 .4</size>
+                </box>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <box>
+                  <size>.1 .1 .4</size>
+                </box>
+              </geometry>
+            </visual>
+          </link>
+	<link name='Rarm'>
+            <pose>-0.2 -0.1 .7 -0.785 0 0</pose>
+
+            <collision name='collision'>
+              <geometry>
+                <box>
+                  <size>.1 .1 .4</size>
+                </box>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <box>
+                  <size>.1 .1 .4</size>
+                </box>
+              </geometry>
+            </visual>
+          </link>
+	<link name='Head'>
+            <pose>0.15 0 1 0 0 0</pose>
+
+            <collision name='collision'>
+              <geometry>
+               <sphere>
+                <radius>.1</radius>
+              </sphere>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <sphere>
+                <radius>.1</radius>
+              </sphere>
+              </geometry>
+            </visual>
+          </link>
+<include>
+      <uri>model://kinect</uri>
+      <pose>0.15 -0.2 0.7 0 0 -1.5</pose>
+    </include>
+    <joint name="kinect_joint" type="fixed">
+      <child>kinect::link</child>
+      <parent>chassis</parent>
+    </joint>
+</model>
+</sdf>
