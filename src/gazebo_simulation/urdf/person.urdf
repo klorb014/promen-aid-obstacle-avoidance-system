@@ -1,0 +1,220 @@
+<?xml version="1.0"?>
+<robot name="person">
+
+<gazebo>
+    <static>true</static>
+</gazebo>
+
+	<link name='base_link'>
+	    <!--origin rpy="0 0 0" xyz="0.15 0 0.6"/-->
+
+            <collision name='collision'>
+              <geometry>
+                <box size=".5 .2 .5"/>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <box size=".5 .2 .5"/>
+              </geometry>
+            </visual>
+          </link>
+
+
+	<link name='left_leg'>
+            <collision name='collision'>
+              <geometry>
+                <box size=".1 .1 .8"/>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <box size=".1 .1 .8"/>
+              </geometry>
+            </visual>
+          </link>
+
+
+<joint name="base_to_left_leg" type="fixed">
+     <parent link="base_link"/>
+     <child link="left_leg"/>
+     <origin rpy="0 0 0" xyz="-0.15 0 -0.5"/>
+   </joint>
+
+
+	<link name='right_leg'>
+
+            <collision name='collision'>
+              <geometry>
+                <box size=".1 .1 .8"/>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <box size=".1 .1 .8"/>
+              </geometry>
+            </visual>
+          </link>
+
+<joint name="base_to_right_leg" type="fixed">
+     <parent link="base_link"/>
+     <child link="right_leg"/>
+     <origin rpy="0 0 0" xyz="0.15 0 -0.5"/>
+   </joint>
+
+	
+	<link name='left_arm'>
+            <collision name='collision'>
+              <geometry>
+                <box size=".1 .1 .4"/>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <box size=".1 .1 .4"/>
+              </geometry>
+            </visual>
+          </link>
+
+<joint name="base_to_left_arm" type="fixed">
+     <parent link="base_link"/>
+     <child link="left_arm"/>
+     <origin rpy="0.785 0 0" xyz="0.3 0.1 0"/>
+   </joint>
+
+	<link name='right_arm'>
+            <collision name='collision'>
+              <geometry>
+                <box size=".1 .1 .4"/>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <box size=".1 .1 .4"/>
+              </geometry>
+            </visual>
+          </link>
+
+<joint name="base_to_right_arm" type="fixed">
+     <parent link="base_link"/>
+     <child link="right_arm"/>
+     <origin rpy="0.785 0 0" xyz="-0.3 0.1 0"/>
+   </joint>
+
+	<link name='head'>
+            <collision name='collision'>
+              <geometry>
+               <sphere radius=".1"/>
+              </geometry>
+            </collision>
+
+            <visual name='visual'>
+              <geometry>
+                <sphere radius=".1"/>
+              </geometry>
+            </visual>
+          </link>
+
+<joint name="base_to_head" type="fixed">
+     <parent link="base_link"/>
+     <child link="head"/>
+     <origin rpy="0 0 0" xyz="0 0 .4"/>
+   </joint>
+
+<!-- Camera Joint -->
+  <joint name="camera_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0.0 0.15 0.0" rpy="0 0 1.57"/>
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+  </joint>
+
+<link name="camera_link">
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <visual>
+                <origin xyz="0 0 0.1" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://gazebo_simulation/meshes/kinect.dae" />
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="0.07 0.3 0.09"/>
+                </geometry>
+            </collision>
+        </link>
+
+<!-- Dummy Joint -->
+  <joint name="kinect_optical_joint" type="fixed">
+      <axis xyz="0 1 0" />
+      <origin xyz="0.0 0.0 0.0" rpy="-1.57 0 -1.57"/>
+      <parent link="camera_link"/>
+      <child link="kinect_optical_link"/>
+    </joint>
+  <!-- Dummy Link -->
+  <link name="kinect_optical_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.02 0.02 0.02"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+<gazebo reference="camera_link">
+    <sensor type="depth" name="camera">
+        <always_on>true</always_on>
+        <update_rate>20.0</update_rate>
+        <camera>
+            <horizontal_fov>1.047198</horizontal_fov>
+            <image>
+                <format>R8G8B8</format>
+                <width>640</width>
+                <height>480</height>
+            </image>
+            <clip>
+                <near>0.05</near>
+                <far>8.0</far>
+            </clip>
+        </camera>
+        <plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+            <cameraName>camera_ir</cameraName>
+          <imageTopicName>/camera/rgb/image_rect_color</imageTopicName>
+          <cameraInfoTopicName>/camera/rgb/camera_info</cameraInfoTopicName>
+          <depthImageTopicName>/camera/depth_registered/image_raw</depthImageTopicName>
+          <depthImageCameraInfoTopicName>/camera/depth_registered/camera_info</depthImageCameraInfoTopicName>
+          <pointCloudTopicName>/camera/depth_registered/points</pointCloudTopicName>
+
+            <frameName>kinect_optical_link</frameName>
+            <baseline>0.1</baseline>
+            <pointCloudCutoff>0.5</pointCloudCutoff>
+          <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+          <distortionK1>0</distortionK1>
+          <distortionK2>0</distortionK2>
+          <distortionK3>0</distortionK3>
+          <distortionT1>0</distortionT1>
+          <distortionT2>0</distortionT2>
+
+        </plugin>
+    </sensor>
+</gazebo>
+</robot>
