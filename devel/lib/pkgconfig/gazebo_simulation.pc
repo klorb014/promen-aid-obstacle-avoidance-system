@@ -1,4 +1,4 @@
-prefix=/home/lorbetskie/Desktop/promen-aid-obstacle-avoidance-system/devel
+prefix=/home/klorb/promen-aid-obstacle-avoidance-system/devel
 
 Name: gazebo_simulation
 Description: Description of gazebo_simulation

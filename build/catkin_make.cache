@@ -1,2 +1,0 @@
-gazebo_simulation
--DCATKIN_DEVEL_PREFIX=/home/lorbetskie/Desktop/promen-aid-obstacle-avoidance-system/devel -DCMAKE_INSTALL_PREFIX=/home/lorbetskie/Desktop/promen-aid-obstacle-avoidance-system/install -G Unix Makefiles
