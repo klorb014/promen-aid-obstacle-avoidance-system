@@ -1,8 +1,0 @@
-prefix=/home/klorb/promen-aid-obstacle-avoidance-system/devel
-
-Name: gazebo_simulation
-Description: Description of gazebo_simulation
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
