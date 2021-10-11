@@ -1,0 +1,4 @@
+<launch>
+  <node name="gps_node" pkg="orientation" type="gps_publisher.py" />
+  <node name="imu_node" pkg="orientation" type="imu_publisher.py" />
+</launch>
