@@ -26,14 +26,6 @@ class ObstacleDetector:
             rospy.Subscriber(image_topic, Image,callback=self.image_callback, queue_size=1)
 
     def publish_obstacle_data(self):
-        '''obstacle_distances = []
-        obstacles = self.obstacle_distances.shape[0]
-        for obstacle_index in range(obstacles):
-            msg = HapticMsg()
-            msg.motor_index = obstacle_index
-            msg.obstacle_distance = self.obstacle_distances[obstacle_index]
-            self.publisher.publish(msg)
-            rospy.loginfo(msg)'''
         msg = HapticMsg()
         msg.obstacle_distances = self.obstacle_distances
         self.pub.publish(msg)
@@ -48,7 +40,7 @@ class ObstacleDetector:
             slice = int(round(slice_width * slice_index))
             argmin = np.unravel_index(np.nanargmin(depth_array[:,slice:slice+slice_width]), depth_array[:,slice:slice+slice_width].shape)
             argmin_distance = (argmin[0],argmin[1]+slice)
-            min_distance = round(depth_array[argmin_distance]/1000,1)
+            min_distance = round(depth_array[argmin_distance]/1000,2)
             self.obstacle_distances[slice_index] = min_distance
             if self.depth_topic is not None:
                 self.obstacle_locations[slice_index][0] = argmin_distance[1]
@@ -94,5 +86,6 @@ class ObstacleDetector:
 
 
 if __name__ == '__main__':
-    obstacle_detector = ObstacleDetector("/camera/aligned_depth_to_color/image_raw", 3, "/camera/color/image_raw")
+    #obstacle_detector = ObstacleDetector("/camera/aligned_depth_to_color/image_raw", 3, "/camera/color/image_raw")
+    obstacle_detector = ObstacleDetector("/camera/aligned_depth_to_color/image_raw")
     obstacle_detector.run()
