@@ -6,7 +6,7 @@ import board
 from adafruit_lsm6ds.lsm6ds33 import LSM6DS33
 import rospy
 from sensor_msgs.msg import Imu
-from geometry_msgs.msg import Quaternion, Vector3
+from geometry_msgs.msg import Vector3
 
 
 def create_vector3(xdata, ydata, zdata):
