@@ -25,7 +25,7 @@ def imu():
     rospy.loginfo("Publishing Imu at: " + imu_pub.resolved_name)
     rospy.init_node('imu_node')
 
-    rate = rospy.Rate(1) # 50hz
+    rate = rospy.Rate(10) # 50hz
     while not rospy.is_shutdown():
         rospy.loginfo("Acceleration: X:%.2f, Y: %.2f, Z: %.2f m/s^2" % (sensor.acceleration))
         rospy.loginfo("Gyro X:%.2f, Y: %.2f, Z: %.2f radians/s" % (sensor.gyro))

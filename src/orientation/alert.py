@@ -24,6 +24,7 @@ class Alert:
 
 class TelegramAlert(Alert):
     def __init__(self):
+        super().__init__()
         with open("telegram_secrets.yaml", "r") as stream:
             try:
                 config = yaml.safe_load(stream)
@@ -55,6 +56,7 @@ class TelegramAlert(Alert):
 
 class SMSAlert(Alert):
     def __init__(self):
+        super().__init__()
         with open("telegram_secrets.yaml", "r") as stream:
             try:
                 config = yaml.safe_load(stream)
@@ -71,7 +73,7 @@ class SMSAlert(Alert):
     def send_alert(self, message, location=None):  
         if not self.locked():
             latitude = location[0]
-            longitude = location[0]
+            longitude = location[1]
             location_link = 'http://maps.google.com/?q={0},{1}'.format(latitude,longitude)
             message_body = "\nPromenAid Message:\n\n{0} \n\nLocation:\n{1}".format(message,location_link)
 
