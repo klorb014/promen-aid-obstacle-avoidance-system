@@ -5,6 +5,7 @@ from sensor_msgs.msg import Image
 from orientation.msg import HapticMsg
 import numpy as np
 import cv2
+import argparse
 
 class ObstacleDetector:
 
@@ -86,6 +87,11 @@ class ObstacleDetector:
 
 
 if __name__ == '__main__':
-    #obstacle_detector = ObstacleDetector("/camera/aligned_depth_to_color/image_raw", 3, "/camera/color/image_raw")
-    obstacle_detector = ObstacleDetector("/camera/aligned_depth_to_color/image_raw")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--display", help="display video feed", action="store_true")
+    args = parser.parse_args()
+    if args.display:
+        obstacle_detector = ObstacleDetector("/camera/aligned_depth_to_color/image_raw", 3, "/camera/color/image_raw")
+    else:
+        obstacle_detector = ObstacleDetector("/camera/aligned_depth_to_color/image_raw")
     obstacle_detector.run()
