@@ -18,7 +18,7 @@ def data_logger(imu_data):
     total_a = total_acceleration(linear_acceleration)
     rospy.loginfo(total_a)
 
-    with open('acceleration_logger.csv', 'a', encoding='UTF8', newline='') as f:
+    with open('acceleration_logger.csv', 'a') as f:
         writer = csv.writer(f)
         writer.writerow([str(total_a)])
 

@@ -5,6 +5,7 @@ from sensor_msgs.msg import Image
 from orientation.msg import HapticMsg
 import numpy as np
 import cv2
+import argparse
 
 class ObstacleDetector:
 
@@ -68,6 +69,21 @@ class ObstacleDetector:
         except CvBridgeError, e:
             rospy.logerr("CvBridge Error: {0}".format(e))
 
+        image_width = cv_image.shape[1]
+        slice_width = image_width/self.slices
+
+        for slice_index in range(1,self.slices):
+            slice = int(round(slice_width * slice_index))
+            color = (255, 0, 0)
+            # Line thickness of 9 px
+            thickness = 2
+            print(cv_image.shape)
+            start_point = (slice,0)
+            end_point = (slice,720)
+            # Using cv2.line() method
+            # Draw a diagonal green line with thickness of 9 px
+            image = cv2.line(cv_image, start_point, end_point, color, thickness)
+
         obstacles = self.obstacle_distances.shape[0]
         for obstacle_index in range(obstacles):
             coordinate = self.obstacle_locations[obstacle_index]
@@ -86,6 +102,11 @@ class ObstacleDetector:
 
 
 if __name__ == '__main__':
-    #obstacle_detector = ObstacleDetector("/camera/aligned_depth_to_color/image_raw", 3, "/camera/color/image_raw")
-    obstacle_detector = ObstacleDetector("/camera/aligned_depth_to_color/image_raw")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--display", help="display video feed", action="store_true")
+    args = parser.parse_args()
+    if args.display:
+        obstacle_detector = ObstacleDetector("/camera/aligned_depth_to_color/image_raw", 3, "/camera/color/image_raw")
+    else:
+        obstacle_detector = ObstacleDetector("/camera/aligned_depth_to_color/image_raw")
     obstacle_detector.run()
