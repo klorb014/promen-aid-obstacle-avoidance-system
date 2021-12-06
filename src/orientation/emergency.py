@@ -42,7 +42,7 @@ class EmergencyController:
             self.ydata = [0]
             self.line = Line2D(self.tdata, self.ydata)
             self.ax.add_line(self.line)
-            self.ax.set_ylim(0, 20)
+            self.ax.set_ylim(5, 25)
             self.ax.set_xlim(0, self.maxt)
             self.ax.axhline(self.fall_dectection_threshold, linestyle='--', color='red')
             self.ax.set_xlabel("Time")
@@ -130,7 +130,7 @@ class EmergencyController:
 
 
 if __name__ == '__main__':
-    distress_button_pin, fall_dectection_threshold = 16, 16
+    distress_button_pin, fall_dectection_threshold = 16, 20
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--display", help="display video feed", action="store_true")

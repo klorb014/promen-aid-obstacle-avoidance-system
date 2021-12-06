@@ -1,1 +1,1 @@
-int8 total
+uint16 total
